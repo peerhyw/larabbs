@@ -7,7 +7,7 @@
 
     <!-- CSRF Token 方便前段的js脚本获取csrf令牌 -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    
+
     <title>@yield('title','LaraBBS')</title>
 
     <!-- Styles :asset('css/app.css') 使用当前请求的协议（ HTTP 或 HTTPS ）为资源文件生成一个 URL-->
@@ -22,7 +22,7 @@
             @yield('content')
         </div>
         @include('layouts._footer')
-    </div>  
+    </div>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
