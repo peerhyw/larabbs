@@ -12,6 +12,7 @@
 
     <!-- Styles :asset('css/app.css') 使用当前请求的协议（ HTTP 或 HTTPS ）为资源文件生成一个 URL-->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    @yield('styles')
 </head>
 
 <body>
@@ -27,5 +28,6 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    @yield('scripts')
 </body>
 </html>
