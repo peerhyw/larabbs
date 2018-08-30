@@ -44,7 +44,7 @@
 
                         <div class="form-group">
                             <textarea name="body" id="editor" rows="3" class="form-control" placeholder="请填入至少三个字符的内容" required>
-                                {{ old('body',$topic->id) }}
+                                {{ old('body',$topic->body) }}
                             </textarea>
                         </div>
 
