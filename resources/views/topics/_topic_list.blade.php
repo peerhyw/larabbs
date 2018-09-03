@@ -10,10 +10,10 @@
 
                 <div class="media-body">
                     <div class="media-heading">
-                        <a href="{{ route('topics.show',[$topic->id]) }}" title="{{ $topic->title }}">
+                        <a href="{{ $topic->link() }}" title="{{ $topic->title }}">
                             {{ $topic->title }}
                         </a>
-                        <a href="{{ route('topics.show',[$topic->id]) }}" class="pull-right">
+                        <a href="{{ $topic->link() }}" class="pull-right">
                             <span class="badge">{{ $topic->reply_count }}</span>
                         </a>
                     </div>
@@ -25,7 +25,7 @@
                         </a>
 
                         <span> • </span>
-                        <a href="{{ route('users.show',[$topic->user_id]) }}" title="{{ $topic->user->name }}">
+                        <a href="{{ $topic->link() }}" title="{{ $topic->user->name }}">
                             <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
                             {{ $topic->user->name }}
                         </a>
