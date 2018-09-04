@@ -14,6 +14,10 @@ class Topic extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function replies(){
+        return $this->hasMany(Reply::class);
+    }
+
     //scope前缀 本地作用域
 
     public function scopeWithOrder($query,$order){
