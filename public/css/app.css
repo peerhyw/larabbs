@@ -8967,6 +8967,10 @@ body {
   color: #b3b3b3;
 }
 
+.topic-reply .meta .delete {
+  padding: 5px 0px 2px 0px;
+}
+
 /* Notifications badge */
 
 .notifications-badge {
