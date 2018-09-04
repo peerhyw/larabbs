@@ -169,3 +169,19 @@ body{
         color: #b3b3b3;
     }
 }
+
+/* Notifications badge */
+
+.notifications-badge {
+    margin-top: -1;
+
+    .badge-fade {
+        background-color: #EBE8E8;
+        padding: 5px 10px 2px 10px;
+    }
+
+    .badge-hint {
+        background-color: #d15b47 !important;;
+        padding: 5px 10px 2px 10px;
+    }
+}
