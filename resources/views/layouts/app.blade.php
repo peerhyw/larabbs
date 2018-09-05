@@ -8,8 +8,9 @@
     <!-- CSRF Token 方便前段的js脚本获取csrf令牌 -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title','LaraBBS')</title>
-    <meta name="description" content="@yield('description','LaraBBS')">
+    <title>@yield('title','LaraBBS') - {{ setting('site_name','peer lara bbs') }}</title>
+    <meta name="description" content="@yield('description',setting('seo_description','peer lara bbs'))">
+    <meta name="keyword" content="@yield('keyword',setting('seo_keyword','peer lara bbs'))">
 
     <!-- Styles :asset('css/app.css') 使用当前请求的协议（ HTTP 或 HTTPS ）为资源文件生成一个 URL-->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
