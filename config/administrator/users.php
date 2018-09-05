@@ -42,7 +42,7 @@ return [
             'title' => '用户名',
             'sortable' => false,
             'output' => function ($name,$model){
-                return '<a href="/users/'.$model->id.'" target=_blank>'.$name.'</a>';
+                return '<a href="/users/'.$model->id.'" target="_blank">'.$name.'</a>';
             },
         ],
 
