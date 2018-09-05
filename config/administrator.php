@@ -24,7 +24,7 @@ return array(
      * @type string
      */
     //应用名称，在页面标题和左上角站点名称处显示
-    'title' => config('app.name'),
+    'title' => env('APP_NAME','Laravel'),
 
     /*
      * The path to your model config directory
