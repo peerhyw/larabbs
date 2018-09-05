@@ -141,8 +141,11 @@ return array(
      *
      * @type string
      */
+    /*
+      Chrome 浏览器会报错 ERR_TOO_MANY_REDIRECTS(重定向频繁)，意为太多跳转死循环，页面无法渲染。原因是 administrator.php 中，我们将 home_page 选项设置为 users 页面，当我们使用 2 号用户访问 /admin 时，会自动跳转到 users 页面，users 页面检测到 2 号用户没有访问权限，遂重定向到后台首页 /admin 中，访问首页又会重定向到 users(/admin/users) 中，所以就是死循环。解决的方法很简单，将 home_page 选项改为访问权限较低的页面即可：
+    */
     // 用来作为后台主页的菜单条目，由 `use_dashboard` 选项决定，菜单指的是 `menu` 选项
-    'home_page' => 'users',
+    'home_page' => 'topics',  // /admin/topics
 
     /*
      * The route to which the user will be taken when they click the "back to site" button
@@ -158,7 +161,7 @@ return array(
      * @type string
      */
     // 当选项 `permission` 权限检测不通过时，会重定向用户到此处设置的路径
-    'login_path' => 'login',
+    'login_path' => 'permission-denied',
 
     /*
      * The logout path is the path where Administrator will send the user when they click the logout link
