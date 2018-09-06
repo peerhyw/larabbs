@@ -8987,3 +8987,20 @@ body {
   padding: 5px 10px 2px 10px;
 }
 
+/* sidebar */
+
+.sidebar .panel-body {
+  padding: 12px;
+}
+
+.sidebar hr {
+  margin-top: 8px;
+  margin-bottom: 10px;
+}
+
+.sidebar .active-users a.media {
+  color: #797878;
+  line-height: 26px;
+  font-size: 0,9em;
+}
+
