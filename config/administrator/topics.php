@@ -89,6 +89,9 @@ return [
         'id' => [
             'title' => '内容 ID',
         ],
+        'title' => [
+            'title' => '标题',
+        ],
 
         'user' => [
             'title' => '用户',

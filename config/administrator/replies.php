@@ -86,6 +86,10 @@ return [
             'options_sort_field' => 'id',
         ],
 
+        'topic_id' => [
+            'title' => '话题 ID',
+        ],
+
         'content' => [
             'title' => '回复内容',
         ],
