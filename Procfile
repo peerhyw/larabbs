@@ -1,1 +1,1 @@
-web:vendorbinheroku-apache2 public/
+web:vendorbinheroku-php-apache2 public/
