@@ -11,6 +11,11 @@
                         <img src="{{ $user->avatar }}" width="300px" height="300px" alt="{{ $user->name }}" class="img-responsive img-circle">
                     </div>
                     <div class="media-body">
+
+                        @if (Auth::check())
+                            @include('users._follow_form')
+                        @endif
+
                         <hr>
                         <h4><strong>个人简介</strong></h4>
                         <p>{{ $user->introduction }}</p>
@@ -47,9 +52,19 @@
                     <li class="{{ active_class(if_query('tab','replies'))}}">
                         <a href="{{ route('users.show',[$user->id,'tab' => 'replies']) }}">Ta 的回复</a>
                     </li>
+                    <li class="{{ active_class(if_query('tab','followings'))}}">
+                        <a href="{{ route('users.show',[$user->id,'tab' => 'followings']) }}">Ta 的关注</a>
+                    </li>
+                    <li class="{{ active_class(if_query('tab','followers'))}}">
+                        <a href="{{ route('users.show',[$user->id,'tab' => 'followers']) }}">Ta 的粉丝</a>
+                    </li>
                 </ul>
                 @if(if_query('tab','replies'))
                     @include('users._replies',['replies' => $user->replies()->with('topic')->recent()->paginate(5)])
+                @elseif(if_query('tab','followings'))
+                    @include('users._followlist',['followlist' => $user->followings()->paginate(10)])
+                @elseif(if_query('tab','followers'))
+                    @include('users._followlist',['followlist' => $user->followers()->paginate(10)])
                 @else
                     @include('users._topics',['topics' => $user->topics()->recent()->paginate(5)])
                 @endif
