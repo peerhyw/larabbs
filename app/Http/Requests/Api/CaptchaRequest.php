@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api;
 
 use Dingo\Api\Http\FormRequest;
 
-class VerificationCodeRequest extends FormRequest
+class CaptchaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,17 +21,11 @@ class VerificationCodeRequest extends FormRequest
      *
      * @return array
      */
+    //用户必须通过手机号调用 图片验证码 接口
     public function rules()
     {
         return [
-            'captcha_key' => 'required|string',
-            'captcha_code' => 'required|string'
-        ];
-    }
-
-    public function messages(){
-        return [
-            'phone.regex' => '手机号码格式错误。'
+            'phone' => 'required|regex:/^1[34578]\d{9}$/|unique:users'
         ];
     }
 }
