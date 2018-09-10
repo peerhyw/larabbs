@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api;
 
 use Dingo\Api\Http\FormRequest;
 
-class VerificationCodeRequest extends FormRequest
+class UserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,17 +24,17 @@ class VerificationCodeRequest extends FormRequest
     public function rules()
     {
         return [
-            'phone' => [
-                'required',
-                'regex:/^((13[0-9])|(14[5,7])|(17[0,3,5-8])|(18[0-9])|166|198|199)\d{8}$/',
-                'unique:users'
-            ]
+            'name' => 'required|string|max:255',
+            'password' => 'required|string|min:6',
+            'verification_key' => 'required|string',
+            'verification_code' => 'required|string',
         ];
     }
 
-    public function messages(){
+    public function attributes(){
         return [
-            'phone.regex' => '手机号码格式错误。'
+            'verification_key' => '短信验证码 key',
+            'verification_code' => '短信验证码',
         ];
     }
 }

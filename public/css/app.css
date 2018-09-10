@@ -8381,6 +8381,10 @@ body {
   margin-right: 8px;
 }
 
+.nav > li:hover .dropdown-menu {
+  display: block;
+}
+
 /* Sticky footer styles */
 
 html {

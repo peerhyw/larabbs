@@ -32,6 +32,10 @@ body{
     }
 }
 
+.nav > li:hover .dropdown-menu{
+    display: block;
+}
+
 /* Sticky footer styles */
 
 html{
