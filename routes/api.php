@@ -13,6 +13,11 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+$api = app('Dingo\Api\Routing\Router');
+
+//namespace 所有v1版本的路由都会指向App\Http\Controllers\Api
+$api->version('v1',[
+    'namespace' => 'App\Http\Controllers\Api'
+],function ($api){
+    $api->post('verificationCodes','VerificationCodesController@store')->name('api.verificationCodes.store');
 });
