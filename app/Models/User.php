@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 use Auth;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use Traits\ActiveUserHelper;
     use Traits\LastActivedAtHelper;
@@ -103,5 +104,15 @@ class User extends Authenticatable
 
     public function isFollowing($user_id){
         return $this->followings->contains($user_id);
+    }
+
+    //返回user的id
+    public function getJWTIdentifier(){
+        return $this->getKey();
+    }
+
+    //额外再JWT载荷中增加的自定义内容
+    public function getJWTCustomClaims(){
+        return [];
     }
 }
