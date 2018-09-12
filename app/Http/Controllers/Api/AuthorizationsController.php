@@ -10,13 +10,13 @@ use App\Http\Requests\Api\AuthorizationRequest;
 
 class AuthorizationsController extends Controller
 {
-    public function socialStore($type,SocialAuthorizationRequest $request){
+    public function socialStore($social_type,SocialAuthorizationRequest $request){
 
-        if(!in_arary($type,['weixin'])){
-            return $this->response->errorDadRequest();
+        if(!in_array($social_type,['weixin'])){
+            return $this->response->errorBadRequest();
         }
 
-        $driver = \Socialite::driver($type);
+        $driver = \Socialite::driver($social_type);
 
         try{
             if($code = $request->code){
@@ -25,7 +25,7 @@ class AuthorizationsController extends Controller
             }else{
                 $token = $request->access_token;
 
-                if($type == 'weixin'){
+                if($social_type == 'weixin'){
                     $driver->setOpenId($request->openid);
                 }
             }
@@ -36,7 +36,7 @@ class AuthorizationsController extends Controller
             return $this->response->errorUnauthorized('参数错误，未获取用户信息');
         }
 
-        switch ($type) {
+        switch ($social_type) {
             case 'weixin':
                 $unionid = $oauthUser->offsetExists('unionid') ? $oauthUser->offsetGet('unionid') : null;
                 if($unionid){
@@ -51,17 +51,17 @@ class AuthorizationsController extends Controller
                         'name' => $oauthUser->getNickname(),
                         'avatar' => $oauthUser->getAvatar(),
                         'weixin_openid' => $oauthUser->getId(),
-                        'weixin_unionid' => $oauthUser->offsetGet('unionid'),
+                        'weixin_unionid' => $unionid,
                     ]);
                 }
                 break;
         }
 
         $token = Auth::guard('api')->fromUser($user);
-        return $this->responseWithToken($token)->setStatusCode(201);
+        return $this->respondWithToken($token)->setStatusCode(201);
     }
 
-    pucblic function store(SocialAuthorizationRequest $request){
+    public function store(AuthorizationRequest $request){
         $username = $request->username;
 
         //email or phone
@@ -87,7 +87,7 @@ class AuthorizationsController extends Controller
         return $this->response->noContent();
     }
 
-    puclic function responseWithToken($token){
+    public function respondWithToken($token){
         return $this->response->array([
             'access_token' => $token,
             'token_type' => 'Bearer',

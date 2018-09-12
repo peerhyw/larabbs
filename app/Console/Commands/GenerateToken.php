@@ -38,7 +38,7 @@ class GenerateToken extends Command
      */
     public function handle()
     {
-        $userId = $this->ask('输入用户 id')；
+        $userId = $this->ask('输入用户 id');
 
         $user = User::find($userId);
 

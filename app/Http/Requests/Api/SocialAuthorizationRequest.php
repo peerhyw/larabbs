@@ -23,7 +23,7 @@ class SocialAuthorizationRequest extends FormRequest
      */
     public function rules()
     {
-        $rules => [
+        $rules = [
             //required_without code和access_token 必须有一个
             'code' => 'required_without:access_token|string',
             'access_token' => 'required_without:code|string',
