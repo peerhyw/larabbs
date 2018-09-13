@@ -57,6 +57,7 @@ class AuthorizationsController extends Controller
                 break;
         }
 
+        //第三方登录获取 user 后，我们可以使用 fromUser 方法为某一个用户模型生成token
         $token = Auth::guard('api')->fromUser($user);
         return $this->respondWithToken($token)->setStatusCode(201);
     }
@@ -70,6 +71,7 @@ class AuthorizationsController extends Controller
 
         $credentials['password'] = $request->password;
 
+        //登录后，我们可以使用 fromUser 方法为某一个用户模型生成token
         if(!$token = \Auth::guard('api')->attempt($credentials)){
             return $this->response->errorUnauthorized('用户名或密码错误');
         }
@@ -79,7 +81,7 @@ class AuthorizationsController extends Controller
 
     public function update(){
         $token = Auth::guard('api')->refresh();
-        return $this->responseWithToken($token);
+        return $this->respondWithToken($token);
     }
 
     public function destroy(){
