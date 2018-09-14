@@ -8,7 +8,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use App\Models\Reply;
 
-class TopicReplied extends Notification// implements ShouldQueue
+/*
+ * 需要运行php artisan queue:work 才能执行队列里的任务
+ */
+class TopicReplied extends Notification implements ShouldQueue
 {
     use Queueable;
 
