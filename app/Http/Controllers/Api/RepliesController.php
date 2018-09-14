@@ -17,4 +17,16 @@ class RepliesController extends Controller
 
         return $this->response->item($reply,new ReplyTransformer())->setStatusCode(201);
     }
+
+    public function destroy(Topic $topic,Reply $reply){
+        if($reply->topic_id != $topic->id){
+            return $this->response->errorBadRequest();
+        }
+
+        //app/Policies/ReplyPolicy.php 中已存在的授权策略
+        $this->authorize('destroy',$reply);
+        $reply->delete();
+
+        return $this->response->noContent();
+    }
 }
