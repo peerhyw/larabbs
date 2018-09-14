@@ -44,6 +44,12 @@ class UsersController extends Controller
     }
 
     //$this->user() 相当于 \Auth::guard('api')->user()
+    /*
+     *  Auth::user()源码下是没有指定guard，所以会使用默认的guard，
+     *  如果你是默认普通的web请求，那么肯定是能够拿到当前用户的。
+     *  而 Auth::guard ('API')->user()能拿到用户，
+     *  说明你本身是API的请求，所以Auth::user()是拿不到API请求下的用户的，除非你指定默认 guard 为 api
+     */
     public function me(){
         return $this->response->item($this->user(),new UserTransformer());
     }
