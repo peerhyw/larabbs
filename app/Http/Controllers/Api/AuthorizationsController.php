@@ -73,7 +73,7 @@ class AuthorizationsController extends Controller
 
         //登录后，我们可以使用 fromUser 方法为某一个用户模型生成token
         if(!$token = \Auth::guard('api')->attempt($credentials)){
-            return $this->response->errorUnauthorized('用户名或密码错误');
+            return $this->response->errorUnauthorized(trans('auth.failed'));
         }
 
         return $this->respondWithToken($token)->setStatusCode(201);
