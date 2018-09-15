@@ -1,4 +1,4 @@
-<?
+<?php
 
 return [
     'key' => env('JPUSH_KEY'),
