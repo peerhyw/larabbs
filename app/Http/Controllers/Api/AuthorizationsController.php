@@ -7,6 +7,10 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\Api\SocialAuthorizationRequest;
 use App\Http\Requests\Api\AuthorizationRequest;
+use Zend\Diactoros\Response as Psr7Response;
+use Psr\Http\Message\ServerRequestInterface;
+use League\OAuth2\Server\Exception\OAuthServerException;
+use League\OAuth2\Server\AuthorizationServer;
 
 class AuthorizationsController extends Controller
 {
@@ -62,30 +66,36 @@ class AuthorizationsController extends Controller
         return $this->respondWithToken($token)->setStatusCode(201);
     }
 
-    public function store(AuthorizationRequest $request){
-        $username = $request->username;
-
-        //email or phone
-        filter_var($username,FILTER_VALIDATE_EMAIL) ? $credentials['email'] = $username :
-                                                      $credentials['phone'] = $username;
-
-        $credentials['password'] = $request->password;
-
-        //登录后，我们可以使用 fromUser 方法为某一个用户模型生成token
-        if(!$token = \Auth::guard('api')->attempt($credentials)){
-            return $this->response->errorUnauthorized(trans('auth.failed'));
+    public function store(AuthorizationRequest $originRequest,AuthorizationServer $server,ServerRequestInterface $serverRequest){
+        /*
+         *  respondToAccessTokenRequest 会依次处理：
+         *  检测 client 参数是否正确；
+         *  检测 scope 参数是否正确；
+         *  通过用户名查找用户；
+         *  验证用户密码是否正确；
+         *  生成 Response 并返回；
+         *  最终返回的 Response 是 Zend\Diactoros\Respnose 的实例，
+         *  代码位置在 vendor/zendframework/zend-diactoros/src/Response.php，
+         *  查看代码我们可以使用 withStatus 方法设置该 Response 的状态码，最后直接返回 Response 即可。
+         */
+        try {
+            //new Psr7Response 如果构造函数有参数就必须要括号，如果没有参数，加不加括号效果都相同。
+            return $server->respondToAccessTokenRequest($serverRequest,new Psr7Response)->withStatus(201);
+        } catch (OAuthServerException $e) {
+            return $this->response->errorUnauthorized($e->getMessage());
         }
-
-        return $this->respondWithToken($token)->setStatusCode(201);
     }
 
-    public function update(){
-        $token = Auth::guard('api')->refresh();
-        return $this->respondWithToken($token);
+    public function update(AuthorizationServer $server,ServerRequestInterface $serverRequest){
+        try {
+            return $server->respondToAccessTokenRequest($serverRequest,new Psr7Response);
+        } catch (OAuthServerException $e) {
+            return $this->response->errorUnauthorized($e->getMessage());
+        }
     }
 
     public function destroy(){
-        Auth::guard('api')->logout();
+        $this->user()->token()->revoke();
         return $this->response->noContent();
     }
 
