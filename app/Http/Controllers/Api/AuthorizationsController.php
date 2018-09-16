@@ -12,9 +12,12 @@ use Psr\Http\Message\ServerRequestInterface;
 use League\OAuth2\Server\Exception\OAuthServerException;
 use League\OAuth2\Server\AuthorizationServer;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+use App\Traits\PassportToken;
 
 class AuthorizationsController extends Controller
 {
+    use PassportToken;
+
     public function socialStore($social_type,SocialAuthorizationRequest $request){
 
         if(!in_array($social_type,['weixin'])){
@@ -63,8 +66,10 @@ class AuthorizationsController extends Controller
         }
 
         //第三方登录获取 user 后，我们可以使用 fromUser 方法为某一个用户模型生成token
-        $token = Auth::guard('api')->fromUser($user);
-        return $this->respondWithToken($token)->setStatusCode(201);
+        //$token = Auth::guard('api')->fromUser($user);
+
+        $result = $this->getBearerTokenByUser($user,'1',false);
+        return $this->response->array($result)->setStatusCode(201);
     }
 
     public function store(AuthorizationRequest $originRequest,AuthorizationServer $server,ServerRequestInterface $serverRequest){
