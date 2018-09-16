@@ -11,6 +11,7 @@ use Zend\Diactoros\Response as Psr7Response;
 use Psr\Http\Message\ServerRequestInterface;
 use League\OAuth2\Server\Exception\OAuthServerException;
 use League\OAuth2\Server\AuthorizationServer;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class AuthorizationsController extends Controller
 {
@@ -95,6 +96,9 @@ class AuthorizationsController extends Controller
     }
 
     public function destroy(){
+        if(!Auth::guard('api')->check()){
+            throw new UnauthorizedHttpException(get_class($this),'Unable to authenticate with invalid API key and token.');
+        }
         $this->user()->token()->revoke();
         return $this->response->noContent();
     }
@@ -103,7 +107,7 @@ class AuthorizationsController extends Controller
         return $this->response->array([
             'access_token' => $token,
             'token_type' => 'Bearer',
-            'expires_in' => \Auth::guard('api')->factory()->getTTL()*60
+            'expires_in' => Auth::guard('api')->factory()->getTTL()*60
         ]);
     }
 }

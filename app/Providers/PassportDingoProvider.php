@@ -8,6 +8,7 @@ use Illuminate\Auth\AuthManager;
 use Dingo\Api\Auth\Provider\Authorization;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
+//写法参考 vendor/dingo/api/src/Auth/Provider/JWT.php
 class PassportDingoProvider extends Authorization
 {
     protected $auth;
