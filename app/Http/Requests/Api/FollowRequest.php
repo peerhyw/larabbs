@@ -28,7 +28,7 @@ class FollowRequest extends FormRequest
 
     public function messages(){
         return [
-            'user_id.required' => '需关注的用户的id不能为空',
+            'user_id.required' => '用户id不能为空',
         ];
     }
 }

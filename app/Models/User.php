@@ -92,16 +92,24 @@ class User extends Authenticatable implements JWTSubject
 
     public function follow($user_ids){
         if(!is_array($user_ids)){
+            if(!$this->find($user_ids)){
+                return false;
+            }
             $user_ids = compact('user_ids');
         }
         $this->followings()->sync($user_ids,false);
+        return true;
     }
 
     public function unfollow($user_ids){
         if(!is_array($user_ids)){
+            if(!$this->find($user_ids)){
+                return false;
+            }
             $user_ids = compact('user_ids');
         }
         $this->followings()->detach($user_ids);
+        return true;
     }
 
     public function isFollowing($user_id){

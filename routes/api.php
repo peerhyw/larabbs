@@ -66,6 +66,10 @@ $api->version('v1',[
         $api->get('links','LinksController@index')->name('api.links.index');
         //活跃用户
         $api->get('actived/users','UsersController@activedIndex')->name('api.actived.users.index');
+        //粉丝列表
+        $api->get('user/{user}/followers','FollowersController@followersIndex')->name('api.user.followers.index');
+        //关注列表
+        $api->get('user/{user}/followings','FollowersController@followingsIndex')->name('api.user.followings.index');
 
         //需要token验证的接口
         $api->group(['middleware' => 'api.auth'],function ($api){
@@ -95,6 +99,8 @@ $api->version('v1',[
             $api->get('user/permissions','PermissionsController@index')->name('api.user.permissions.index');
             //用户关注
             $api->post('user/follow','FollowersController@store')->name('api.user.follow.store');
+            //取消关注
+            $api->delete('user/unfollow','FollowersController@destroy')->name('api.user.unfollow.destroy');
         });
     });
 });
