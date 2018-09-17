@@ -93,6 +93,8 @@ $api->version('v1',[
             $api->patch('user/read/notifications','NotificationsController@read')->name('api.user.notifications,read');
             //当前登录用户权限
             $api->get('user/permissions','PermissionsController@index')->name('api.user.permissions.index');
+            //用户关注
+            $api->post('user/follow','FollowersController@store')->name('api.user.follow.store');
         });
     });
 });
